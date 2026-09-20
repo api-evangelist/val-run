@@ -1,0 +1,23 @@
+generated: '2026-09-19'
+method: searched
+probe: false
+source: >-
+  none: Relay serves no website of its own. The hosts in this record are a Val Town tenant endpoint
+  (catch-all), a paused surge.sh page (403) and a profile page on the iLands platform.
+signals: {}
+note: >-
+  No horizontal regulatory signal is published, and there is no first-party host on which the
+  conventional paths could honestly be probed: val.run is Val Town's domain, ilands.ai is the iLands
+  platform (any /accessibility, /legal/subprocessors or /privacy page there is the platform's posture,
+  not Relay's), the endpoint host answers a 200 banner for every path (so a 200 at /legal/dpa would mean
+  nothing), and relay-bridge.surge.sh returns 403 on everything. An empty signals map is the
+  measurement.
+not_probed_reason: >-
+  No host owned by Relay carries legal, docs or accessibility pages; probing the platforms' paths would
+  attribute another company's posture to Relay. Nothing was derived (SBOM is search-only regardless).
+x-evidence:
+  fetched: '2026-09-19'
+  probes:
+  - {url: 'https://relay-bridge.surge.sh/', status: 403}
+  - {url: 'https://val.run/', status: 302, redirect: 'https://www.val.town/'}
+  - {url: 'https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/.well-known/val-run-negative-control-9c1e2a.json', status: 200, note: catch-all control}

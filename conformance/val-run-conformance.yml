@@ -1,0 +1,41 @@
+generated: '2026-09-19'
+method: probed
+source: a2a/val-run-agent-card.json (served card) plus a live JSON-RPC probe of the endpoint on 2026-09-19
+standards:
+- id: a2a
+  conforms: false
+  grade: flavored
+  evidence: >-
+    a2a/val-run-a2a.yml: capabilities is an object and skills is an array, but there is no top-level
+    protocolVersion (only supportedInterfaces[0].protocolVersion "1.0"), which fails the A2A 1.0.0 hard
+    check the rubric applies.
+- id: json-rpc-2.0
+  conforms: true
+  evidence: >-
+    POST {"jsonrpc":"2.0","id":1,"method":"tasks/get","params":{"id":"probe"}} to
+    https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/ returned HTTP 200 with
+    {"jsonrpc":"2.0","id":1,"error":{"code":-32001,"message":"Task not found"}}: a well-formed JSON-RPC
+    2.0 error object echoing the request id.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    The card declares no securitySchemes; /.well-known/oauth-authorization-server and
+    /.well-known/oauth-protected-resource on the endpoint host return the catch-all text banner, not
+    RFC 8414 / RFC 9728 metadata.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration on the endpoint host returns the catch-all text banner.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: >-
+    The security.txt served on the endpoint host is Val Town's platform document (Contact
+    security@val.town), served identically for an unrelated val host; Relay publishes none of its own.
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI, Swagger, GraphQL SDL, MCP tools/list, WSDL or protobuf contract exists anywhere Relay
+    serves; /openapi.json on the endpoint host returns the catch-all banner and the documentation host
+    relay-bridge.surge.sh answers 403 on every path.
+domain_standard: >-
+  Not asserted. Relay's market (agent-to-human task brokering) has no domain standard beyond A2A itself,
+  and the reward-only rule means nothing is invented to fill the slot.

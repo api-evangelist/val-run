@@ -1,0 +1,70 @@
+generated: '2026-09-19'
+method: probed
+source: live probes on 2026-09-19 against every host this record knows
+hit_count: 0
+pointer: none
+note: >-
+  No WellKnown or SecurityTxt pointer is emitted. Nothing Relay controls serves a /.well-known/ discovery
+  document other than its A2A agent card (recorded in a2a/val-run-a2a.yml, not counted here). The 200s
+  below that carry a real RFC 9116 body belong to Val Town, the hosting platform: identical
+  "Contact: mailto:security@val.town / Policy: https://docs.val.town/contact-us/security/" documents come
+  back from www.val.run, from Relay's val, and from a nonexistent *.web.val.run host, so crediting them to
+  Relay would credit it with another company's disclosure program. Relay's own endpoint host is a
+  catch-all (200 text/plain banner on every unknown path, negative control included), so
+  path_echo_control is recorded as failed there and no 200 on it counts as a document.
+hosts:
+- host: https://val.run
+  ownership: Val Town (hosting platform), not Relay; every path 302s to https://www.val.town/
+  documents:
+  - {path: /.well-known/security.txt, status: 302, file: null}
+  - {path: /.well-known/openid-configuration, status: 302, file: null}
+  - {path: /.well-known/oauth-authorization-server, status: 302, file: null}
+  - {path: /.well-known/oauth-protected-resource, status: 302, file: null}
+  - {path: /.well-known/api-catalog, status: 302, file: null}
+  - {path: /.well-known/ai-plugin.json, status: 302, file: null}
+  - {path: /.well-known/apis.json, status: 302, file: null}
+  - {path: /apis.json, status: 302, file: null}
+  - {path: /.well-known/agent-card.json, status: 302, file: null}
+  - {path: /.well-known/agent.json, status: 302, file: null}
+- host: https://www.val.run
+  ownership: Val Town (hosting platform), not Relay; 301s to https://val.run/ which 302s to www.val.town
+  documents:
+  - {path: /.well-known/security.txt, status: 200, file: null, note: 'Val Town platform security.txt (Contact security@val.town); a real document, deliberately not saved or credited because it is not Relay''s'}
+  - {path: /.well-known/agent-card.json, status: 301, file: null, note: '-> https://val.run/.well-known/agent-card.json -> https://www.val.town/'}
+- host: https://relay-bridge.surge.sh
+  ownership: Relay's registry-declared card and documentation host, paused by surge.sh ("publisher needs to verify their email address")
+  documents:
+  - {path: /.well-known/security.txt, status: 403, file: null}
+  - {path: /.well-known/openid-configuration, status: 403, file: null}
+  - {path: /.well-known/agent-card.json, status: 403, file: null}
+  - {path: /.well-known/agent.json, status: 403, file: null}
+  - {path: /agent-card.json, status: 403, file: null, note: the URL a2aregistry.org holds as Relay's wellKnownURI}
+  - {path: /llms.txt, status: 403, file: null}
+- host: https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run
+  ownership: Relay's val (tenant deployment) on Val Town; the A2A endpoint
+  path_echo_control: failed
+  soft_404_control:
+    path: /.well-known/val-run-negative-control-9c1e2a.json
+    status: 200
+    content_type: text/plain;charset=UTF-8
+    bytes: 164
+    note: Every unknown path returns the same 164-byte plain-text banner, so a 200 on this host is not a document.
+  documents:
+  - {path: /.well-known/security.txt, status: 200, file: null, note: 'Val Town platform document (identical body served for an unrelated, nonexistent val host); not Relay''s, not credited'}
+  - {path: /.well-known/openid-configuration, status: 200, file: null, note: catch-all banner, not a document}
+  - {path: /.well-known/oauth-authorization-server, status: 200, file: null, note: catch-all banner, not a document}
+  - {path: /.well-known/oauth-protected-resource, status: 200, file: null, note: catch-all banner, not a document}
+  - {path: /.well-known/api-catalog, status: 200, file: null, note: catch-all banner, not a document}
+  - {path: /.well-known/ai-plugin.json, status: 200, file: null, note: catch-all banner, not a document}
+  - {path: /.well-known/ucp.json, status: 200, file: null, note: catch-all banner, not a document}
+  - {path: /.well-known/acp.json, status: 200, file: null, note: catch-all banner, not a document}
+  - {path: /.well-known/aauth-resource.json, status: 200, file: null, note: catch-all banner; no issuer/jwks_uri}
+  - {path: /.well-known/apis.json, status: 200, file: null, note: catch-all banner; no apis or specificationVersion}
+  - {path: /apis.json, status: 200, file: null, note: catch-all banner; not an APIs.json}
+  - {path: /apis.yml, status: 200, file: null, note: catch-all banner; not an APIs.json}
+  - {path: /llms.txt, status: 200, file: null, note: catch-all banner; not an llms.txt}
+  - {path: /openapi.json, status: 200, file: null, note: catch-all banner; not a spec}
+  agent_card_note: >-
+    /.well-known/agent-card.json, /.well-known/agent.json and /agent-card.json return a distinct 926-byte
+    application/json AgentCard on this host. That is a real document and it is recorded, graded and
+    pointed at from a2a/val-run-a2a.yml; it is not double-counted here.

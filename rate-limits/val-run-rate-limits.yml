@@ -1,0 +1,47 @@
+generated: '2026-09-19'
+method: probed
+source: >-
+  Response headers observed on https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/ (GET root,
+  GET /.well-known/agent-card.json, POST JSON-RPC) on 2026-09-19.
+limit_count: 1
+description: >-
+  Relay publishes no rate-limit documentation (its documentation host is a paused surge.sh page, HTTP
+  403). The endpoint does return a runtime rate-limit signal on every response, but it is set by the
+  hosting platform's edge (Val Town, fronted by Cloudflare and Render), not by Relay: the identical
+  x-ratelimit-* triple appears on a nonexistent *.web.val.run host (HTTP 500) and on every response from
+  Relay's val. Recorded because it is the signal an agent calling Relay actually receives; attributed to
+  the platform because that is who sets it.
+limits:
+- scope: per-val, platform-enforced (Val Town edge); observed, not documented
+  window: 60 seconds (x-ratelimit-reset counted down from 60)
+  limit: 5000
+  burst: null
+  documented: false
+  attribution: hosting platform (Val Town), not Relay
+  source: 'x-ratelimit-limit: 5000 / x-ratelimit-remaining: 4999 / x-ratelimit-reset: 60 on 2026-09-19'
+response_headers:
+  observed:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  checked_for:
+  - RateLimit-Limit
+  - RateLimit-Remaining
+  - RateLimit-Reset
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  - Retry-After
+  not_observed:
+  - RateLimit-Limit
+  - RateLimit-Remaining
+  - RateLimit-Reset
+  - Retry-After
+exhaustion_status: null
+exhaustion_note: Not observed and not documented; the limit was not exercised.
+x-evidence:
+  fetched: '2026-09-19'
+  probes:
+  - {url: 'https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/', status: 200, headers: 'x-ratelimit-limit: 5000; x-ratelimit-remaining: 4999; x-ratelimit-reset: 60'}
+  - {url: 'https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/.well-known/agent-card.json', status: 200, headers: 'x-ratelimit-limit: 5000; x-ratelimit-remaining: 4992; x-ratelimit-reset: 57'}
+  - {url: 'https://nonexistent-val-xyz123.web.val.run/', status: 500, headers: 'x-ratelimit-limit: 5000; x-ratelimit-remaining: 4993; x-ratelimit-reset: 59', note: 'platform-attribution control: the same headers on a host that is not Relay''s'}

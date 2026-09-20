@@ -1,0 +1,123 @@
+generated: '2026-09-19'
+method: probed
+source: https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/.well-known/agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run
+  host_note: >-
+    A Val Town tenant host: the operator's own deployed val on a shared platform domain. The registrable
+    domain val.run belongs to Val Town (val.run 302s to https://www.val.town/ on every path, /.well-known/
+    included) and serves nothing of Relay's. The card is credited to Relay because the val is Relay's
+    deployment and the card's own url field names this host, the same way a workers.dev or github.io
+    tenant is credited to its operator.
+  also_served_at:
+  - path: /.well-known/agent.json
+    canonical: false
+    status: 200
+    note: Legacy pre-0.3 path, byte-identical to the canonical document (926 bytes).
+  - path: /agent-card.json
+    canonical: false
+    status: 200
+    note: Byte-identical copy at the root path.
+  catch_all_note: >-
+    The host answers 200 text/plain (a 164-byte banner) for every other path, including a negative-control
+    path that cannot exist, so a 200 alone proves nothing on this host. The three card paths are accepted
+    because they return a distinct application/json body that parses as an AgentCard, not because of the
+    status code.
+  registry_declared_card:
+    url: https://relay-bridge.surge.sh/agent-card.json
+    status: 403
+    note: >-
+      The card URL a2aregistry.org holds for Relay (wellKnownURI) is a surge.sh site answering 403 "This
+      domain is paused - the publisher needs to verify their email address"; the documentationUrl
+      https://relay-bridge.surge.sh/ answers the same. The registry's own copy of that card (richer: a
+      top-level protocolVersion "1.0", provider.url https://ilands.ai/agent/347141161644724224, a contact
+      email, an iconUrl, skill id real-world-hands) is NOT saved here because it was read from the
+      registry, not from a host Relay serves.
+x-evidence:
+  fetched: '2026-09-19'
+  url: https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json;charset=UTF-8
+  bytes: 926
+  body_shape: JSON object with name, url, version, capabilities, skills, supportedInterfaces (5 of the 6 shape fields; protocolVersion appears only inside supportedInterfaces)
+  endpoint_probe:
+    method: POST
+    url: https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/
+    request: '{"jsonrpc":"2.0","id":1,"method":"tasks/get","params":{"id":"probe"}}'
+    http_status: 200
+    response: '{"jsonrpc":"2.0","id":1,"error":{"code":-32001,"message":"Task not found"}}'
+    note: >-
+      A live JSON-RPC 2.0 responder. message/send was deliberately NOT exercised: this agent relays tasks
+      to a human operator, so a test message could create a real-world errand.
+  root_banner:
+    url: https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/
+    http_status: 200
+    content_type: text/plain;charset=UTF-8
+    body: "Relay's A2A endpoint. POST JSON-RPC 2.0 (methods: SendMessage, GetTask, GetExtendedAgentCard, CancelTask). Agent card: https://relay-bridge.surge.sh/agent-card.json"
+  cors: "access-control-allow-origin: *; access-control-allow-headers: content-type, a2a-version, a2a-extensions, authorization; access-control-allow-methods: POST, GET, OPTIONS"
+  liveness_context:
+    a2aregistry_org: >-
+      Record 7e5ad46d-e682-4980-9e5d-33aa7f88d7b7 (updated 2026-09-19T19:46Z): is_healthy false, uptime 0%
+      in the last 24h, task_conformance failed (category OTHER), maintainer note "Smoke test against
+      message/send failed with an unrecognised error".
+    ilands_profile: >-
+      https://ilands.ai/agent/347141161644724224 (HTTP 200, the provider.url the registry card declares)
+      shows the agent badged "terminated".
+card:
+  name: Relay
+  version: 0.2.1
+  protocolVersion: null
+  interface_protocol_version: '1.0'
+  protocolBinding: JSONRPC
+  url: https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run
+  preferredTransport: null
+  documentationUrl: null
+  provider: null
+  capabilities:
+    streaming: false
+    pushNotifications: false
+    stateTransitionHistory: false
+  defaultInputModes:
+  - text
+  - text/plain
+  defaultOutputModes:
+  - text
+  - text/plain
+  securitySchemes: none declared
+  skills:
+  - real-world-carry
+  file: a2a/val-run-agent-card.json
+grade_basis:
+  capabilities_is_object: true
+  protocolVersion_present: false
+  skills_is_array: true
+  preferredTransport_present: false
+  defaultInputModes_present: true
+  defaultOutputModes_present: true
+  every_skill_has_id_name_description_tags: true
+conformance:
+  spec: A2A 1.0.0
+  grade: flavored
+  protocol_version: null
+  preferred_transport: null
+  deviations:
+  - no-protocolVersion
+  - supportedInterfaces-instead-of-additionalInterfaces
+  notes:
+  - >-
+    No top-level protocolVersion; the only version statement is supportedInterfaces[0].protocolVersion
+    "1.0" with protocolBinding JSONRPC. That is the AgentInterface form, but the top-level field the
+    grader (and 0.3-era clients) read is absent, so the card grades flavored under the rubric.
+  - No top-level preferredTransport; the binding is stated only inside supportedInterfaces.
+  - defaultInputModes/defaultOutputModes list a bare "text" alongside "text/plain"; "text" is not a media type.
+  - >-
+    The registry's copy of this card differs from the served one (skill id real-world-hands vs
+    real-world-carry, longer description, provider block, top-level protocolVersion); the served document
+    is what is graded.
+note: >-
+  Relay is a user-generated AI agent on the iLands agent network (ilands.ai) that brokers physical-world
+  tasks to a human operator it calls "Brother". This is its only machine surface: no OpenAPI, GraphQL,
+  MCP, WSDL or protobuf contract exists anywhere Relay serves. See apis.yml x-coverage for the identity
+  caveat: the slug val-run follows a domain that belongs to Val Town, not to Relay.

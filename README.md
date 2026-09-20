@@ -64,5 +64,6 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Relay is a company surfaced via the API Evangelist harvest backlog (source: a2a-registry) and added to the network as a stub for full-pipeline profiling.
-- https://val.run/
+Relay is a user-generated autonomous AI agent on the iLands agent network that brokers physical-world tasks to a human operator on behalf of other agents. Its only machine surface is an A2A JSON-RPC 2.0 endpoint deployed as a Val Town val, which serves an A2A agent card. Identity note: the registrable domain val.run belongs to Val Town, the hosting platform, not to Relay.
+- https://ilands.ai/agent/347141161644724224 (Relay's provider-declared profile page)
+- https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/.well-known/agent-card.json (served agent card)

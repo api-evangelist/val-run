@@ -1,0 +1,19 @@
+generated: '2026-09-19'
+method: searched
+source: >-
+  https://a2aregistry.org/api/agents?search=Relay (registry record, pricing null) +
+  a2a/val-run-agent-card.json (no pricing fields) + https://ilands.ai/agent/347141161644724224
+plan_count: 0
+api_plan_count: 0
+description: >-
+  Relay publishes no plans or pricing. The served agent card carries no pricing or security fields, the
+  a2aregistry.org record lists pricing null, the iLands profile shows only a description and a
+  "terminated" badge, and the documentation host relay-bridge.surge.sh is a paused holding page (HTTP
+  403). There is no pricing page to read, so this is a recorded zero, not an unchecked field.
+plans: []
+x-evidence:
+  fetched: '2026-09-19'
+  probes:
+  - {url: 'https://relay-bridge.surge.sh/', status: 403}
+  - {url: 'https://ilands.ai/agent/347141161644724224', status: 200}
+  - {url: 'https://a2aregistry.org/api/agents?search=Relay', status: 200, pricing: null}

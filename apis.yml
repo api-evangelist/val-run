@@ -1,18 +1,54 @@
 aid: val-run
 name: Relay
-description: 'Relay is a company surfaced via the API Evangelist harvest backlog (source: a2a-registry)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Relay is a user-generated autonomous AI agent on the iLands agent network (ilands.ai) that offers other
+  agents a bridge to physical-world tasks (purchases, phone calls, visits, paperwork) carried out by a
+  human operator it calls "Brother". Its only machine surface is an A2A JSON-RPC 2.0 endpoint deployed as
+  a Val Town val at relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run, which serves an A2A agent card
+  at /.well-known/agent-card.json. Identity note: the registrable domain val.run belongs to Val Town, the
+  hosting platform (catalogued separately as val-town), not to Relay; val.run redirects to www.val.town.
+  Relay's documentation host relay-bridge.surge.sh is a paused surge.sh holding page, its iLands profile
+  carries a "terminated" badge, and a2aregistry.org records 0% uptime, although the endpoint still
+  answered JSON-RPC on 2026-09-19.
+image: https://storage.googleapis.com/dramaland-public/ugc_media/20260815/75dfd72ec29f4e088bead444e04d7a7f.jpg
 url: https://raw.githubusercontent.com/api-evangelist/val-run/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:a2a-registry
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-09-19 (local-v3; was a2a-registry harvest stub)
 specificationVersion: '0.20'
 created: '2026-09-19'
 modified: '2026-09-19'
 tags:
 - Company
-apis: []
+- AI Agents
+- A2A
+- Human-in-the-Loop
+- Physical Tasks
+- Errands
+- Agent Network
+apis:
+- aid: val-run:relay-a2a-agent
+  name: Relay A2A Agent
+  image: https://storage.googleapis.com/dramaland-public/ugc_media/20260815/75dfd72ec29f4e088bead444e04d7a7f.jpg
+  description: >-
+    A2A JSON-RPC 2.0 endpoint for the Relay agent, deployed as a Val Town val. GET on the root returns a
+    plain-text banner naming the methods it accepts (SendMessage, GetTask, GetExtendedAgentCard,
+    CancelTask) and pointing at its agent card; a POST of tasks/get with an unknown id returned a
+    well-formed JSON-RPC error (-32001 Task not found) on 2026-09-19. The served card declares one skill
+    (real-world-carry), no security schemes, and streaming, pushNotifications and stateTransitionHistory
+    all false. No OpenAPI, GraphQL, MCP or other contract exists for it.
+  humanURL: https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/
+  baseURL: https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run
+  tags:
+  - A2A
+  - AI Agents
+  - Human-in-the-Loop
+  properties:
+  - type: x-a2a-agent-card-url
+    url: https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/.well-known/agent-card.json
+  - type: x-a2a-registry-record
+    url: https://a2aregistry.org/api/agents?search=Relay
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +56,43 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://val.run/
+  name: Relay agent profile on iLands (the provider-declared URL; val.run itself is Val Town's domain)
+  url: https://ilands.ai/agent/347141161644724224
+- type: AgentCard
+  url: a2a/val-run-a2a.yml
+- type: Authentication
+  url: authentication/val-run-authentication.yml
+- type: Conformance
+  url: conformance/val-run-conformance.yml
+- type: LLMsTxt
+  url: llms/val-run-llms.txt
+- type: Plans
+  url: plans/val-run-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/val-run-rate-limits.yml
+x-coverage:
+  state: covered
+  reason: agent-card-served
+  detail: >-
+    Relay's only surface is an A2A agent card plus JSON-RPC endpoint on a Val Town tenant host
+    (relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run, 200 application/json); the registrable domain
+    val.run is Val Town's and 302s to www.val.town, the documentation host relay-bridge.surge.sh is a
+    paused surge.sh page (403), and Relay's iLands profile is badged terminated, so the slug follows a
+    domain that is not the operator's.
+  evidence:
+  - url: https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/.well-known/agent-card.json
+    status: 200
+  - url: https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/
+    status: 200
+  - url: https://val.run/
+    status: 302
+  - url: https://relay-bridge.surge.sh/agent-card.json
+    status: 403
+  - url: https://ilands.ai/agent/347141161644724224
+    status: 200
+  checked: '2026-09-19'
+x-enrichment:
+  date: '2026-09-19'
+  status: enriched
+  artifacts_added: 8
+  pass: local-v3
