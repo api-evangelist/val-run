@@ -96,3 +96,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 8
   pass: local-v3
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://relay2--5de8b3b2995311f1a5481607ee4eb77e.web.val.run/.well-known/agent-card.json"
+  grade: "flavored"
+  protocol_version: "1.0"
+  control: 200
