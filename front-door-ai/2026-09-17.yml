@@ -1,0 +1,34 @@
+# Front Door AI Index — val-run — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: val-run
+  lexicon_version: '1.0'
+  probed_at: '2026-09-25'
+  host: ilands.ai
+  final_host: ilands.ai
+  ownership: own
+  owner: val-run
+  shares_host_with: null
+  inherited_from: null
+  alias_of: null
+  verdict: scored
+  score: 23
+  band: 6
+  band_label: dominant
+  host_score: 23
+  density: 19.46
+  words: 1182
+  tiers:
+    agentic: 7
+    core: 15
+    model: 1
+  ambiguous: 25
+  top_terms:
+    agent: 24
+    AI: 15
+    AI agent: 3
+    autonomous agent: 3
+    AI assistant: 1
+    Claude: 1
+    intelligence: 1
